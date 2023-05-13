@@ -1,0 +1,35 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 20px;
+    height: calc(100% - 60px);
+    .chart{
+        max-width: 1150px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        & > div{
+            width: 100%;
+        }
+        .right-chart{
+            margin-top: 36px;
+        }
+    }
+    @media (max-width: 1200px){
+        .chart{
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+    .btn{
+        background-color: #3f51b5;
+        color: #FFF;
+        margin-right: 10px;
+        &:disabled{
+            opacity: 0.5;
+        }
+    }
+}

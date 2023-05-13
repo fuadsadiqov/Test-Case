@@ -1,0 +1,24 @@
+<div class="container">
+    <p *ngIf="!activeDatas">Choose some chart type</p>
+    <div *ngIf="activeDatas" class="chart">
+        <div class="left-chart">
+            <h2>{{activeDatas?.name}}</h2>
+            <canvas baseChart class="chart"
+            [data]="barChartData"
+            [options]="barChartOptions"
+            [plugins]="barChartPlugins"
+            [type]="barChartType">
+            </canvas>
+            <button mat-raised-button [disabled]="barChartOptions?.scales?.['x']?.min == 0" class="btn" (click)="toLeft()">Left</button>
+            <button mat-raised-button [disabled]="barChartOptions?.scales?.['x']?.max == 6" class="btn" (click)="toRight()">Right</button>    
+        </div>
+        <div class="right-chart">
+            <canvas baseChart class="chart"
+                [data]="barChartCurrentData"
+                [options]="barChartCurrentOptions"
+                [plugins]="barChartPlugins"
+                [type]="barChartType">
+            </canvas>
+        </div>
+    </div>
+</div>
