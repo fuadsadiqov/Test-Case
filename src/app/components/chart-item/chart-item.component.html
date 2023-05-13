@@ -1,5 +1,5 @@
 <div class="container">
-    <p *ngIf="!activeDatas">Choose some chart type</p>
+    <p *ngIf="activeDatas == null || !activeDatas">Choose some chart type</p>
     <div *ngIf="activeDatas" class="chart">
         <div class="left-chart">
             <h2>{{activeDatas?.name}}</h2>

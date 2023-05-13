@@ -1,10 +1,9 @@
-import { ChangeDetectorRef, Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { ChartService } from 'src/app/services/chart.service';
 // Ng Chart
-import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
+import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
-
 
 @Component({
   selector: 'app-chart-item',
@@ -13,18 +12,24 @@ import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 })
 export class ChartItemComponent implements OnInit{
 
-  activeDatas!: any
-  constructor(private chartService: ChartService, private cdr: ChangeDetectorRef) { }
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+  activeDatas: any = null
+  public barChartType: ChartType = 'bar';
+  public barChartData: ChartData<'bar'> | undefined;
+  public barChartPlugins = [DataLabelsPlugin];
+  // Right or static chart
+  public barChartCurrentData: ChartData<'bar'> | undefined;
+
+  constructor(private chartService: ChartService) { }
   // To find current chart
+
   ngOnInit() {
     this.chartService.activeDatas$.subscribe(datas => {
       this.activeDatas = datas
       this.updateBarChartData();
     })
+    this.updateChart()
   }
-
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
-
   public barChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     // We use these empty structures as placeholders for dynamic theming.
@@ -54,7 +59,7 @@ export class ChartItemComponent implements OnInit{
     scales: {
       x: {
         min: 0,
-        max: 3
+        max: 1
       },
       y: {
         min: 10,
@@ -73,13 +78,6 @@ export class ChartItemComponent implements OnInit{
     }
   };
 
-  public barChartType: ChartType = 'bar';
-  public barChartData: ChartData<'bar'> | undefined;
-  public barChartPlugins = [
-    DataLabelsPlugin
-  ];
-  // Right or static chart
-  public barChartCurrentData: ChartData<'bar'> | undefined;
 
   updateBarChartData() {
     if (this.activeDatas) {
@@ -94,14 +92,12 @@ export class ChartItemComponent implements OnInit{
       this.barChartCurrentData = {
         labels: ['May-2022', 'May-2023'],
         datasets: [
-          { data: this.activeDatas.first, label: 'Series A' },
-          { data: this.activeDatas.second, label: 'Series B' }
+          { data: [this.activeDatas.first[5], this.activeDatas.first[6]], label: 'Series A' },
+          { data: [this.activeDatas.second[5], this.activeDatas.second[6]], label: 'Series B' }
         ]
       };
     }
   }
-
-
   updateXAxis(direction: 'left' | 'right') {
     if (this.barChartOptions && this.barChartOptions.scales && this.barChartOptions.scales['x']) {
       let currentMax = this.barChartOptions.scales['x'].max;
@@ -117,13 +113,15 @@ export class ChartItemComponent implements OnInit{
         }
       }
     }
+    this.updateChart()
+  }
+  updateChart(){
+    this.chart?.chart?.update()
   }
   toLeft() {
     this.updateXAxis('left');
   }
-  
   toRight() {
     this.updateXAxis('right');
   }
-
 }
