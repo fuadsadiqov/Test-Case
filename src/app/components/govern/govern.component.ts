@@ -1,4 +1,5 @@
 import { Component, ViewChild, OnInit, Input } from '@angular/core';
+import { ChartService } from 'src/app/services/chart.service';
 // Ng Chart
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
@@ -7,14 +8,14 @@ import { data } from 'src/app/data';
 import { ChartInterface } from 'src/app/models/chart.interface';
 
 @Component({
-  selector: 'app-chart-item',
-  templateUrl: './chart-item.component.html',
-  styleUrls: ['./chart-item.component.scss']
+  selector: 'app-govern',
+  templateUrl: './govern.component.html',
+  styleUrls: ['./govern.component.scss']
 })
-export class ChartItemComponent{
+export class GovernComponent{
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   
-  chartItem: ChartInterface[] = data[0].value
+  chartItem: ChartInterface[] = data[1].value
   
   public barChartOptions: ChartConfiguration['options'] = {
     responsive: false,
@@ -24,18 +25,16 @@ export class ChartItemComponent{
         grid: {
           display: false
         },
-        stacked: true,
       },
       y: {
         min: 0,
-        max: 450,
+        max: 250,
         grid:{
           display: false
         },
         ticks:{
           display: false,
         },
-        stacked: true
       }
     },
     plugins: {

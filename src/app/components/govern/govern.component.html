@@ -1,0 +1,47 @@
+<div class="chart-container">
+    <div class="chart-title">Government Budget & Foreign Trade, In ₼</div>
+    <div class="chart-item">
+        <div class="legend-container">
+          <div class="legend" *ngFor="let item of chartItem">
+            <div class="box">
+              <div
+                [ngStyle]="{
+                  'background-color': item.color,
+                  'border-top': '3px dotted ' + item.color
+                }"
+                [class.line]="item.line"
+                class="bg-div"
+              ></div>
+              <span>{{ item.label }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="chart-box">
+          <div class="chart-left">
+            <canvas
+              baseChart
+              class="chart"
+              [data]="barChartData"
+              [options]="barChartOptions"
+              [plugins]="barChartPlugins"
+              [type]="barChartType"
+            >
+            </canvas>
+          </div>
+          <div class="chart-right">
+            <canvas
+              baseChart
+              class="chart"
+              width="160"
+              height="450"
+              [data]="barCurrentChartData"
+              [options]="barChartOptions"
+              [plugins]="barChartPlugins"
+              [type]="barChartType"
+            >
+            </canvas>
+          </div>
+        </div>
+      </div>
+      
+</div>

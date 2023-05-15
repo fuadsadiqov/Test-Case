@@ -1,0 +1,18 @@
+.grid-container{
+    margin: 20px 40px;
+    justify-items: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+@media (max-width: 1200px){
+    .grid-container{
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+.grid-title{
+    text-align: center;
+    padding-top: 60px;
+    font-weight: 800;
+    font-size: 30px;
+}
